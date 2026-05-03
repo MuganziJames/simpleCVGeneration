@@ -49,9 +49,14 @@ app = FastAPI(
 # ---------------------------------------------------------------------------
 # CORS – update ALLOWED_ORIGINS to match your live domain(s)
 # ---------------------------------------------------------------------------
+# Accept Netlify URL from env var (set FRONTEND_URL on Railway after deploy)
+_frontend_url = os.environ.get("FRONTEND_URL", "").strip().rstrip("/")
+
 ALLOWED_ORIGINS = [
     "https://muganzijamesdev.com",
     "https://www.muganzijamesdev.com",
+    # Netlify deployment – set FRONTEND_URL env var on Railway e.g. https://your-site.netlify.app
+    *([_frontend_url] if _frontend_url else []),
     # Local development
     "http://localhost",
     "http://localhost:3000",
@@ -443,7 +448,7 @@ if __name__ == "__main__":
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
-        port=8000,
+        port=int(os.environ.get("PORT", 8000)),
         reload=True,
         log_level="info",
     )

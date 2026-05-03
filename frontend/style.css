@@ -54,7 +54,9 @@ body {
 }
 
 .hero__brand {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -65,7 +67,20 @@ body {
   transition: color 0.2s ease;
 }
 
+.hero__brand-mark {
+  width: 20px;
+  height: 20px;
+  background: #888;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
 .hero__brand:hover { color: var(--black); }
+.hero__brand:hover .hero__brand-mark { background: var(--black); }
 
 .hero__eyebrow {
   font-size: clamp(1.4rem, 4vw, 2.2rem);
@@ -645,6 +660,22 @@ textarea { resize: vertical; min-height: 90px; }
   font-size: 0.8rem;
   color: var(--gray-500);
 }
+
+.site-footer__teaser {
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+  color: #aaa;
+}
+
+.site-footer__teaser a {
+  color: #888;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+}
+
+.site-footer__teaser a:hover { color: var(--black); }
 
 .site-footer a {
   color: var(--black);
