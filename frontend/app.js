@@ -1,13 +1,11 @@
-/* ═══════════════════════════════════════════════════════
-   CV Generator – Application Logic
-   ═══════════════════════════════════════════════════════ */
+
 
 const API_BASE = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
   ? "http://localhost:8000"
   : "/api";
 const TOTAL_STEPS = 9;
 
-/* ─── Template metadata (swatch class + description) ─── */
+// Template Metadata
 const TEMPLATE_META = {
   uk_professional_template: {
     swatch: "swatch-uk",
@@ -31,12 +29,12 @@ const TEMPLATE_META = {
   },
 };
 
-/* ─── State ──────────────────────────────────────────── */
+// State
 let currentStep = 1;
 let lastPdfBlob = null;
 let lastFileName = "";
 
-/* ─── DOM refs ───────────────────────────────────────── */
+// DOM References
 const progressFill   = document.getElementById("progressFill");
 const progressSteps  = document.getElementById("progressSteps");
 const btnPrev        = document.getElementById("btnPrev");
@@ -52,7 +50,7 @@ const templateGrid   = document.getElementById("templateGrid");
 const templateInput  = document.getElementById("selectedTemplate");
 const templateError  = document.getElementById("templateError");
 
-/* ═══════════════ STEP NAVIGATION ═══════════════════════ */
+// Step Navigation
 
 const STEP_LABELS = [
   "Personal Info",
@@ -109,7 +107,6 @@ function showStep(step) {
 
 function navigateTo(target) {
   if (target === currentStep) return;
-  // Allow going back freely; going forward requires validation
   if (target > currentStep) {
     if (!validateStep(currentStep)) return;
     currentStep = target;
@@ -134,7 +131,7 @@ btnPrev.addEventListener("click", () => {
   }
 });
 
-/* ═══════════════ VALIDATION ════════════════════════════ */
+// Validation
 
 function validateStep(step) {
   if (step === 1) return validatePersonalInfo();
@@ -163,7 +160,6 @@ function validatePersonalInfo() {
     }
   });
 
-  // Basic email format check
   const emailEl = document.getElementById("email");
   if (emailEl.value.trim() && !/.+@.+\..+/.test(emailEl.value.trim())) {
     const errEl = emailEl.closest(".field").querySelector(".field-error");
@@ -193,9 +189,8 @@ function clearFieldError(input, errEl) {
   if (errEl) errEl.textContent = "";
 }
 
-/* ═══════════════ DYNAMIC LISTS ════════════════════════ */
+// Dynamic Lists
 
-/* ── Experience ─────────────────────────────────────── */
 document.getElementById("addExperience").addEventListener("click", () => {
   addExperienceCard();
 });
@@ -242,7 +237,6 @@ function addExperienceCard(data = {}) {
 
   list.appendChild(card);
 
-  // Add seed bullets if any
   const bulletList = card.querySelector(".bullet-list");
   if (data.bullets && data.bullets.length) {
     data.bullets.forEach((b) => addBulletRow(bulletList, b));
@@ -251,7 +245,6 @@ function addExperienceCard(data = {}) {
   }
 }
 
-/* ── Education ─────────────────────────────────────── */
 document.getElementById("addEducation").addEventListener("click", () => {
   addEducationCard();
 });
@@ -290,7 +283,6 @@ function addEducationCard(data = {}) {
   list.appendChild(card);
 }
 
-/* ── Skills ─────────────────────────────────────────── */
 document.getElementById("addSkill").addEventListener("click", () => {
   addSkillCard();
 });
@@ -325,7 +317,6 @@ function addSkillCard(data = {}) {
   list.appendChild(card);
 }
 
-/* ── Projects ───────────────────────────────────────── */
 document.getElementById("addProject").addEventListener("click", () => {
   addProjectCard();
 });
@@ -376,7 +367,6 @@ function addProjectCard(data = {}) {
   }
 }
 
-/* ── Certifications ─────────────────────────────────── */
 document.getElementById("addCertification").addEventListener("click", () => {
   addCertificationCard();
 });
@@ -429,7 +419,6 @@ function addCertificationCard(data = {}) {
   }
 }
 
-/* ── Awards ──────────────────────────────────────────── */
 document.getElementById("addAward").addEventListener("click", () => {
   addAwardRow();
 });
@@ -446,7 +435,6 @@ function addAwardRow(value = "") {
   list.appendChild(row);
 }
 
-/* ── Languages ───────────────────────────────────────── */
 document.getElementById("addLanguage").addEventListener("click", () => {
   addLanguageCard();
 });
@@ -480,7 +468,6 @@ function addLanguageCard(data = {}) {
   list.appendChild(card);
 }
 
-/* ── Bullet helper ───────────────────────────────────── */
 function addBulletRow(container, value = "") {
   const row = document.createElement("div");
   row.className = "bullet-row";
@@ -499,7 +486,7 @@ function renumberCards(list, label) {
   });
 }
 
-/* ═══════════════ TEMPLATE CARDS ════════════════════════ */
+// Template Cards
 
 async function loadTemplates() {
   try {
@@ -543,7 +530,7 @@ function selectTemplate(key) {
   debouncedSave();
 }
 
-/* ═══════════════ FORM COLLECTION ══════════════════════ */
+// Form Collection
 
 function collectFormData() {
   const val = (id) => (document.getElementById(id)?.value || "").trim();
@@ -562,7 +549,6 @@ function collectFormData() {
     interests:  val("interests")  || null,
   };
 
-  // ── Experience ─────────────────────────────────────
   const expCards = document.querySelectorAll("#experienceList .entry-card");
   payload.experience = Array.from(expCards).map((card) => ({
     position:   card.querySelector(".exp-position")?.value.trim() || "",
@@ -571,7 +557,6 @@ function collectFormData() {
     bullets:    collectBullets(card),
   })).filter((e) => e.position || e.company);
 
-  // ── Education ──────────────────────────────────────
   const eduCards = document.querySelectorAll("#educationList .entry-card");
   payload.education = Array.from(eduCards).map((card) => ({
     degree:      card.querySelector(".edu-degree")?.value.trim()      || "",
@@ -579,14 +564,12 @@ function collectFormData() {
     year:        card.querySelector(".edu-year")?.value.trim()        || "",
   })).filter((e) => e.degree || e.institution);
 
-  // ── Skills ─────────────────────────────────────────
   const skillCards = document.querySelectorAll("#skillsList .entry-card");
   payload.skills = Array.from(skillCards).map((card) => ({
     category: card.querySelector(".skill-category")?.value.trim() || "",
     skills:   card.querySelector(".skill-skills")?.value.trim()   || "",
   })).filter((s) => s.category && s.skills);
 
-  // ── Projects ───────────────────────────────────────
   const projCards = document.querySelectorAll("#projectsList .entry-card");
   payload.projects = Array.from(projCards).map((card) => ({
     name:         card.querySelector(".proj-name")?.value.trim() || "",
@@ -594,7 +577,6 @@ function collectFormData() {
     technologies: card.querySelector(".proj-tech")?.value.trim() || null,
   })).filter((p) => p.name);
 
-  // ── Certifications ─────────────────────────────────
   const certCards = document.querySelectorAll("#certificationsList .entry-card");
   payload.certifications = Array.from(certCards).map((card) => ({
     name:    card.querySelector(".cert-name")?.value.trim()   || "",
@@ -603,20 +585,18 @@ function collectFormData() {
     bullets: collectBullets(card),
   })).filter((c) => c.name);
 
-  // ── Awards ─────────────────────────────────────────
   const awardRows = document.querySelectorAll("#awardsList .bullet-row input");
   payload.awards = Array.from(awardRows)
     .map((i) => i.value.trim())
     .filter(Boolean);
 
-  // ── Languages ──────────────────────────────────────
   const langCards = document.querySelectorAll("#languagesList .entry-card");
   payload.languages = Array.from(langCards).map((card) => ({
     language: card.querySelector(".lang-language")?.value.trim() || "",
     level:    card.querySelector(".lang-level")?.value           || "",
   })).filter((l) => l.language);
 
-  // Convert empty arrays to null (cleaner payload)
+
   ["experience", "education", "skills", "projects", "certifications", "awards", "languages"].forEach(
     (k) => { if (!payload[k]?.length) payload[k] = null; }
   );
@@ -630,7 +610,7 @@ function collectBullets(card) {
     .filter(Boolean);
 }
 
-/* ═══════════════ LOCAL-STORAGE CACHE ════════════════ */
+// Cache
 
 const CACHE_KEY     = "cv_gen_draft";
 const CACHE_VERSION = 1;
@@ -723,10 +703,10 @@ function restoreFromCache() {
 }
 
 function clearCache() {
-  try { localStorage.removeItem(CACHE_KEY); } catch { /* ignore */ }
+  try { localStorage.removeItem(CACHE_KEY); } catch { }
 }
 
-/* ─ Snapshot helpers (read current DOM state for saving) ─ */
+// Snapshot Helpers
 
 function _snapExperience() {
   return Array.from(document.querySelectorAll("#experienceList .entry-card")).map((c) => ({
@@ -775,7 +755,7 @@ function _snapLanguages() {
   }));
 }
 
-/* ═══════════════ GENERATE CV ══════════════════════════ */
+// Generate CV
 
 btnGenerate.addEventListener("click", generateCV);
 
@@ -828,7 +808,7 @@ downloadAgain.addEventListener("click", (e) => {
   if (lastPdfBlob) triggerDownload(lastPdfBlob, lastFileName);
 });
 
-/* ═══════════════ UI HELPERS ════════════════════════════ */
+// UI Helpers
 
 function setGenerating(active) {
   btnGenerate.disabled = active;
@@ -854,7 +834,6 @@ function hideBanners() {
   errorBanner.classList.add("hidden");
 }
 
-/** Escape HTML special chars for safe insertion into innerHTML */
 function esc(str) {
   return String(str)
     .replace(/&/g, "&amp;")
@@ -863,14 +842,13 @@ function esc(str) {
     .replace(/"/g, "&quot;");
 }
 
-/* ═══════════════ INIT ══════════════════════════════════ */
+// Init
 
 buildProgressSteps();
 showStep(1);
 restoreFromCache();
 loadTemplates();
 
-// Wire cache notice controls
 document.getElementById("btnClearCache")?.addEventListener("click", () => {
   clearCache();
   document.getElementById("cacheNotice").classList.add("hidden");
@@ -879,6 +857,5 @@ document.getElementById("btnDismissCache")?.addEventListener("click", () => {
   document.getElementById("cacheNotice").classList.add("hidden");
 });
 
-// Auto-save on any form interaction
 document.getElementById("cvForm").addEventListener("input",  debouncedSave);
 document.getElementById("cvForm").addEventListener("change", debouncedSave);

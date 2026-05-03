@@ -55,7 +55,12 @@ _frontend_url = os.environ.get("FRONTEND_URL", "").strip().rstrip("/")
 ALLOWED_ORIGINS = [
     "https://muganzijamesdev.com",
     "https://www.muganzijamesdev.com",
-    # Netlify deployment – set FRONTEND_URL env var on Railway e.g. https://your-site.netlify.app
+    # Netlify live site
+    "https://cotregenration.netlify.app",
+    # Railway backend itself (for direct browser testing)
+    "https://simplecvgeneration-production.up.railway.app",
+    # Netlify frontend – set FRONTEND_URL env var on Railway once you know your Netlify URL
+    # e.g.  FRONTEND_URL=https://cotre.netlify.app
     *([_frontend_url] if _frontend_url else []),
     # Local development
     "http://localhost",
