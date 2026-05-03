@@ -17,7 +17,7 @@
       font-family: 'Inter', system-ui, sans-serif;
       background: #f3f3f3;
       color: #111;
-      height: 100vh;
+      height: 100dvh;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -179,12 +179,17 @@
 
     /* ── MOBILE ── */
     @media (max-width: 600px) {
-      body { overflow-y: auto; height: auto; min-height: 100vh; }
-      .lp-nav { padding: 1.25rem 1.5rem; }
-      .lp-hero { padding: 2rem 1.5rem 1.5rem; justify-content: flex-start; }
-      .lp-wordmark { font-size: clamp(18vw, 24vw, 28vw); }
-      .lp-tagline { font-size: 0.93rem; }
-      .lp-bar { flex-direction: column; align-items: flex-start; gap: 0.4rem; padding: 1rem 1.5rem 1.25rem; }
+      body { height: 100dvh; overflow: hidden; }
+      .lp-nav { padding: 1rem 1.25rem; }
+      .lp-nav-cta { padding: 0.5rem 1.1rem; font-size: 0.75rem; }
+      .lp-hero { padding: 0 1.25rem 0.5rem; justify-content: center; }
+      .lp-wordmark { font-size: clamp(20vw, 22vw, 24vw); }
+      .lp-tagline { font-size: 0.82rem; margin-top: 1rem; max-width: 100%; }
+      .lp-disclaimer { margin-top: 0.4rem; font-size: 0.68rem; }
+      .lp-bar { flex-direction: column; align-items: flex-start; gap: 0.2rem; padding: 0.8rem 1.25rem 0.9rem; }
+      .lp-bar__teaser { font-size: 0.62rem; }
+      .lp-bar__teaser { display: none; }
+      .lp-bar__credit { font-size: 0.62rem; }
     }
   </style>
 </head>

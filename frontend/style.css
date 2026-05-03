@@ -679,8 +679,7 @@ textarea { resize: vertical; min-height: 90px; }
 .site-footer a:hover { opacity: 0.6; }
 
 /* Mobile */
-@media (max-width: 480px) {
-  .hero { padding: 2rem 0 1.5rem; }
+@media (max-width: 480px) {  .site-footer__teaser { display: none; }  .hero { padding: 2rem 0 1.5rem; }
   .nav-row { margin-top: 2rem; }
   .btn { padding: 0.65rem 1.2rem; font-size: 0.85rem; }
   .template-grid { grid-template-columns: 1fr 1fr; }
