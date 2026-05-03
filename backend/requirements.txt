@@ -1,0 +1,18 @@
+# ============================================================
+# James Muganzi Portfolio Backend – Python Dependencies
+# ============================================================
+
+# Web framework
+fastapi>=0.110.0
+
+# ASGI server
+uvicorn[standard]>=0.27.0
+
+# PDF generation
+reportlab>=4.1.0
+
+# Request body parsing (FastAPI uses this under the hood)
+python-multipart>=0.0.9
+
+# Data validation
+pydantic>=2.6.0

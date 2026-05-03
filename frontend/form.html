@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build Your CV — COTRE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="page-wrap">
+
+  <!-- ═══════════════ HERO ════════════════════════════ -->
+  <header class="hero">
+    <a href="/" class="hero__brand" aria-label="Back to COTRE home">COTRE</a>
+    <p class="hero__eyebrow">Build Your</p>
+    <h1 class="hero__title">Professional CV</h1>
+  </header>
+
+  <!-- ═══════════════ STEP INDICATOR (JS) ════════════ -->
+  <nav class="stepper" id="stepper" aria-label="Form progress"></nav>
+
+  <!-- ═══════════════ DRAFT NOTICE ════════════════════ -->
+  <div class="cache-notice hidden" id="cacheNotice">
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 1C4.13 1 1 4.13 1 8s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7zm.75 10.5h-1.5v-5h1.5v5zm0-6.5h-1.5V3.5h1.5V5z" fill="currentColor"/></svg>
+    <span class="cache-notice__text"></span>
+    <div class="cache-notice__actions">
+      <button type="button" class="cache-notice__clear" id="btnClearCache">Clear draft</button>
+      <button type="button" class="cache-notice__dismiss" id="btnDismissCache" aria-label="Dismiss">✕</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MAIN FORM ═══════════════════════ -->
+  <main class="main">
+    <form id="cvForm" novalidate>
+
+      <!-- ──── STEP 1: Personal Info ──── -->
+      <section class="step" id="step-1" data-step="1">
+        <h2 class="step-title">Personal Information</h2>
+        <div class="form-grid two-col">
+          <div class="field required">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="full_name" placeholder="Full name" autocomplete="name" />
+            <span class="field-error"></span>
+          </div>
+          <div class="field required">
+            <label for="jobTitle">Professional Title</label>
+            <input type="text" id="jobTitle" name="job_title" placeholder="Professional title" />
+            <span class="field-error"></span>
+          </div>
+          <div class="field required">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="Email address" autocomplete="email" />
+            <span class="field-error"></span>
+          </div>
+          <div class="field required">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="Phone number" autocomplete="tel" />
+            <span class="field-error"></span>
+          </div>
+          <div class="field">
+            <label for="location">Location <span class="opt">(optional)</span></label>
+            <input type="text" id="location" name="location" placeholder="City, Country" />
+          </div>
+        </div>
+
+        <h3 class="section-subtitle">Online Profiles <span class="opt">(optional)</span></h3>
+        <div class="form-grid two-col">
+          <div class="field">
+            <label for="github">GitHub URL</label>
+            <input type="url" id="github" name="github" placeholder="github.com/yourprofile" />
+          </div>
+          <div class="field">
+            <label for="portfolio">Portfolio / Website</label>
+            <input type="url" id="portfolio" name="portfolio" placeholder="yourwebsite.com" />
+          </div>
+          <div class="field">
+            <label for="linkedin">LinkedIn URL</label>
+            <input type="url" id="linkedin" name="linkedin" placeholder="linkedin.com/in/yourprofile" />
+          </div>
+        </div>
+      </section>
+
+      <!-- ──── STEP 2: Summary ──── -->
+      <section class="step hidden" id="step-2" data-step="2">
+        <h2 class="step-title">Professional Summary <span class="opt">(optional)</span></h2>
+        <p class="step-hint">Write 3–5 sentences about your experience, strengths, and career goals.</p>
+        <div class="field">
+          <label for="summary">Summary</label>
+          <textarea id="summary" name="summary" rows="6" placeholder="A brief overview of your experience, key strengths, and what you bring to the table..."></textarea>
+        </div>
+      </section>
+
+      <!-- ──── STEP 3: Work Experience ──── -->
+      <section class="step hidden" id="step-3" data-step="3">
+        <h2 class="step-title">Work Experience <span class="opt">(optional)</span></h2>
+        <p class="step-hint">Add your positions starting with the most recent. Use bullet points to describe your responsibilities and achievements.</p>
+        <div id="experienceList" class="entry-list"></div>
+        <button type="button" class="btn-add" id="addExperience">
+          <span>+</span> Add Position
+        </button>
+      </section>
+
+      <!-- ──── STEP 4: Education ──── -->
+      <section class="step hidden" id="step-4" data-step="4">
+        <h2 class="step-title">Education <span class="opt">(optional)</span></h2>
+        <p class="step-hint">Add your degrees, diplomas, or programmes, most recent first.</p>
+        <div id="educationList" class="entry-list"></div>
+        <button type="button" class="btn-add" id="addEducation">
+          <span>+</span> Add Education
+        </button>
+      </section>
+
+      <!-- ──── STEP 5: Skills ──── -->
+      <section class="step hidden" id="step-5" data-step="5">
+        <h2 class="step-title">Technical Skills <span class="opt">(optional)</span></h2>
+        <p class="step-hint">Group skills by category (e.g. <em>Frontend</em>, <em>Backend</em>, <em>Cloud</em>). List skills separated by commas.</p>
+        <div id="skillsList" class="entry-list"></div>
+        <button type="button" class="btn-add" id="addSkill">
+          <span>+</span> Add Skill Category
+        </button>
+      </section>
+
+      <!-- ──── STEP 6: Projects ──── -->
+      <section class="step hidden" id="step-6" data-step="6">
+        <h2 class="step-title">Projects <span class="opt">(optional)</span></h2>
+        <p class="step-hint">Showcase key personal or professional projects with a short description.</p>
+        <div id="projectsList" class="entry-list"></div>
+        <button type="button" class="btn-add" id="addProject">
+          <span>+</span> Add Project
+        </button>
+      </section>
+
+      <!-- ──── STEP 7: Certifications ──── -->
+      <section class="step hidden" id="step-7" data-step="7">
+        <h2 class="step-title">Certifications <span class="opt">(optional)</span></h2>
+        <p class="step-hint">List professional certificates, licences, or credentials.</p>
+        <div id="certificationsList" class="entry-list"></div>
+        <button type="button" class="btn-add" id="addCertification">
+          <span>+</span> Add Certification
+        </button>
+      </section>
+
+      <!-- ──── STEP 8: Extras ──── -->
+      <section class="step hidden" id="step-8" data-step="8">
+        <h2 class="step-title">Additional Information <span class="opt">(optional)</span></h2>
+
+        <!-- Awards -->
+        <h3 class="section-subtitle">Awards &amp; Achievements</h3>
+        <p class="step-hint">Enter each award on a separate line.</p>
+        <div id="awardsList" class="entry-list"></div>
+        <button type="button" class="btn-add btn-add--small" id="addAward">
+          <span>+</span> Add Award
+        </button>
+
+        <!-- Languages -->
+        <h3 class="section-subtitle" style="margin-top:2rem;">Languages</h3>
+        <div id="languagesList" class="entry-list"></div>
+        <button type="button" class="btn-add btn-add--small" id="addLanguage">
+          <span>+</span> Add Language
+        </button>
+
+        <!-- Interests -->
+        <h3 class="section-subtitle" style="margin-top:2rem;">Interests &amp; Hobbies</h3>
+        <div class="field">
+          <textarea id="interests" name="interests" rows="3" placeholder="Share what you enjoy outside of work..."></textarea>
+        </div>
+      </section>
+
+      <!-- ──── STEP 9: Template ──── -->
+      <section class="step hidden" id="step-9" data-step="9">
+        <h2 class="step-title">Choose a Template</h2>
+        <p class="step-hint">Pick the visual style for your CV. All templates use the same information — only the layout and typography change.</p>
+        <div class="template-grid" id="templateGrid">
+          <!-- Cards injected by JS -->
+          <div class="template-loading">Loading templates…</div>
+        </div>
+        <input type="hidden" id="selectedTemplate" name="template" value="" />
+        <span class="field-error" id="templateError"></span>
+      </section>
+
+    </form><!-- /cvForm -->
+  </main><!-- /main -->
+
+  <!-- ═══════════════ NAVIGATION ═══════════════ -->
+  <div class="nav-row">
+    <button type="button" class="btn btn--back" id="btnPrev" disabled>‹ Back</button>
+    <div class="nav-row__right">
+      <button type="button" class="btn btn--next" id="btnNext">Next ›</button>
+      <button type="button" class="btn btn--generate hidden" id="btnGenerate">
+        <span id="btnGenerateText">Generate CV</span>
+        <span id="btnGenerateSpinner" class="spinner hidden"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SUCCESS BANNER ═══════════════ -->
+  <div class="success-banner hidden" id="successBanner">
+    <div class="success-banner__icon">✓</div>
+    <div>
+      <strong>Your CV is ready!</strong>
+      <p>Your download should start automatically. <a href="#" id="downloadAgain">Click here</a> if it didn't.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════ ERROR BANNER ═══════════════ -->
+  <div class="error-banner hidden" id="errorBanner">
+    <strong>Something went wrong.</strong>
+    <p id="errorMessage">Please try again.</p>
+  </div>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="site-footer">
+    <p>Developed by <a href="https://muganzijamesdev.com" target="_blank" rel="noopener noreferrer">James Muganzi</a></p>
+  </footer>
+
+  </div><!-- /page-wrap -->
+
+  <script src="app.js"></script>
+</body>
+</html>

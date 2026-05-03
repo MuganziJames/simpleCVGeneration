@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COTRE — Professional CV Builder</title>
+  <meta name="description" content="COTRE helps you create a polished, professional CV in minutes. Choose from handcrafted templates and download instantly." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #f3f3f3;
+      color: #111;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    .lp-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.75rem 2.5rem;
+      flex-shrink: 0;
+    }
+    .lp-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      text-decoration: none;
+      color: #111;
+    }
+    .lp-logo__mark {
+      width: 28px;
+      height: 28px;
+      background: #111;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lp-logo__mark svg { display: block; }
+    .lp-logo__name {
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .lp-nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: #111;
+      color: #f3f3f3;
+      text-decoration: none;
+      padding: 0.6rem 1.35rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      transition: background 0.2s, transform 0.18s, box-shadow 0.18s;
+    }
+    .lp-nav-cta:hover {
+      background: #333;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    .lp-nav-cta__arrow { transition: transform 0.18s; }
+    .lp-nav-cta:hover .lp-nav-cta__arrow { transform: translateX(3px); }
+
+    /* ── HERO ── */
+    .lp-hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 2rem 1rem;
+      text-align: center;
+    }
+    .lp-wordmark {
+      font-size: clamp(15vw, 21vw, 26vw);
+      font-weight: 900;
+      line-height: 0.88;
+      letter-spacing: -0.05em;
+      color: #111;
+      text-transform: uppercase;
+      user-select: none;
+    }
+    .lp-tagline {
+      margin-top: 1.75rem;
+      font-size: 1rem;
+      color: #666;
+      line-height: 1.65;
+      max-width: 400px;
+      font-weight: 400;
+    }
+
+    /* ── BOTTOM BAR ── */
+    .lp-bar {
+      border-top: 1px solid #d8d8d8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 2.5rem 1.4rem;
+      flex-shrink: 0;
+    }
+    .lp-bar__label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #aaa;
+    }
+    .lp-bar__credit {
+      font-size: 0.7rem;
+      color: #aaa;
+    }
+    .lp-bar__credit a {
+      color: #555;
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 1px;
+    }
+    .lp-bar__credit a:hover { color: #111; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      body { overflow-y: auto; height: auto; min-height: 100vh; }
+      .lp-nav { padding: 1.25rem 1.5rem; }
+      .lp-hero { padding: 2rem 1.5rem 1.5rem; justify-content: flex-start; }
+      .lp-wordmark { font-size: clamp(18vw, 24vw, 28vw); }
+      .lp-tagline { font-size: 0.93rem; }
+      .lp-bar { flex-direction: column; align-items: flex-start; gap: 0.4rem; padding: 1rem 1.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="lp-nav">
+    <a href="/" class="lp-logo" aria-label="COTRE home">
+      <div class="lp-logo__mark">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="1" width="5" height="5" fill="#f3f3f3"/>
+          <rect x="8" y="1" width="5" height="5" fill="#f3f3f3"/>
+          <rect x="1" y="8" width="5" height="5" fill="#f3f3f3"/>
+          <rect x="8" y="8" width="5" height="5" fill="#f3f3f3" opacity="0.4"/>
+        </svg>
+      </div>
+      <span class="lp-logo__name">Cotre</span>
+    </a>
+    <a href="form.html" class="lp-nav-cta">
+      Build My CV <span class="lp-nav-cta__arrow">&rarr;</span>
+    </a>
+  </nav>
+
+  <div class="lp-hero">
+    <p class="lp-wordmark">COTRE</p>
+    <p class="lp-tagline">Craft your career story in minutes.<br>Pick a template, fill in your details, download a polished PDF.</p>
+  </div>
+
+  <div class="lp-bar">
+    <span class="lp-bar__label">Professional CV Builder</span>
+    <span class="lp-bar__credit">Developed by <a href="https://muganzijamesdev.com" target="_blank" rel="noopener noreferrer">James Muganzi</a></span>
+  </div>
+
+</body>
+</html>
